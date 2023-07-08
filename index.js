@@ -10,8 +10,24 @@ const {
 const app = express();
 const port = 3000;
 
-app.use(cors());
 app.use(express.json());
+
+const whitelist = [
+  "http://localhost:3000",
+  "http://127.0.0.1:5500",
+  "https://backend-zaiko.vercel.app",
+];
+const option = {
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("No Permitido"));
+    }
+  },
+};
+
+app.use(cors(option));
 
 app.get("/", (req, res) => {
   res.send("Hola desde mi servidor en express");
