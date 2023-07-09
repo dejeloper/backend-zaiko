@@ -8,7 +8,7 @@ class ProductsService {
   }
 
   generate() {
-    const limit = 100;
+    const limit = 10;
     for (let index = 0; index < limit; index++) {
       this.products.push({
         id: faker.string.uuid(),
@@ -26,15 +26,22 @@ class ProductsService {
       ...data,
     };
     this.products.push(newProduct);
-    return newProduct;
+
+    return {
+      success: true,
+      data: newProduct,
+      message: "Ok",
+      count: 1,
+    };
   }
 
   find() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(this.products);
-      }, 3000);
-    });
+    return {
+      success: true,
+      data: this.products,
+      message: "Ok",
+      count: this.products.length,
+    };
   }
 
   async findOne(id) {
@@ -45,7 +52,13 @@ class ProductsService {
     if (product.isBlock) {
       throw boom.conflict("product is block");
     }
-    return product;
+
+    return {
+      success: true,
+      data: product,
+      message: "Ok",
+      count: 1,
+    };
   }
 
   async update(id, changes) {
@@ -58,7 +71,12 @@ class ProductsService {
       ...product,
       ...changes,
     };
-    return this.products[index];
+    return {
+      success: true,
+      data: this.products[index],
+      message: "Ok",
+      count: 1,
+    };
   }
 
   async delete(id) {
@@ -67,7 +85,13 @@ class ProductsService {
       throw boom.notFound("product not found");
     }
     this.products.splice(index, 1);
-    return { id };
+
+    return {
+      success: true,
+      data: id,
+      message: "Ok",
+      count: 1,
+    };
   }
 }
 

@@ -13,7 +13,13 @@ function errorHandler(err, req, res, next) {
 function boomErrorHandler(err, req, res, next) {
   if (err.isBoom) {
     const { output } = err;
-    res.status(output.statusCode).json(output.payload);
+    const { payload, statusCode } = output;
+    res.status(statusCode).json({
+      success: false,
+      data: [],
+      message: payload.message,
+      count: 0,
+    });
   }
   next(err);
 }
