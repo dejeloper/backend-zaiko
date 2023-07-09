@@ -24,11 +24,11 @@
   </pre>
 - Para crear server en el pgadmin:
   <pre>
-	- HOST: IPAddress
+  - HOST: IPAddress
   - DB=zaiko_db
   - USER=zaiko_admin
   - PASSWORD=zaiko_pass
-	- Guardar la password
+  - Guardar la password
 </pre>
 
 Desarrollado por @dejeloper
