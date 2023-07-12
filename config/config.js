@@ -1,5 +1,5 @@
 require("dotenv").config();
-// require("dotenv").config({ path: `.env.local`, override: true });
+require("dotenv").config({ path: `.env.local`, override: true });
 
 const config = {
   env: process.env.NODE_ENV || "local",
