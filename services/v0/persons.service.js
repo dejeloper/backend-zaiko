@@ -1,5 +1,6 @@
 const boom = require("@hapi/boom");
 const pool = require("../../libs/postgres");
+const { models } = require("../../libs/sequelize");
 
 class PersonsService {
   constructor() {
@@ -15,16 +16,17 @@ class PersonsService {
 
   async find() {
     try {
-      const query = `SELECT * FROM public."Persons" WHERE "Id" = '1000'`; //
-      const response = await this.pool.query(query);
+      // const query = `SELECT * FROM public."Persons"`;
+      // const [data] = await sequelize.query(query);
+      const data = await models.Persons.findAll();
 
-      if (response.rows.length <= 0) throw boom.notFound("Persons not found");
+      if (data.length <= 0) throw boom.notFound("Persons not found");
 
       return {
         success: true,
-        data: response.rows,
+        data,
         message: "Ok",
-        count: response.rows.length,
+        count: data.length,
       };
     } catch (error) {
       throw boom.badGateway(error.message);
