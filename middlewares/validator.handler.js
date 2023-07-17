@@ -1,4 +1,4 @@
-const boom = require('@hapi/boom');
+const boom = require("@hapi/boom");
 
 function validatorHandler(schema, property) {
   return (req, res, next) => {
@@ -7,8 +7,8 @@ function validatorHandler(schema, property) {
     if (error) {
       next(boom.badRequest(error));
     }
-    next();
-  }
+    next(error);
+  };
 }
 
 module.exports = validatorHandler;
