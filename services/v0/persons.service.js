@@ -11,22 +11,29 @@ class PersonsService {
   }
 
   async create(data) {
-    return data;
+    const newPerson = await models.Persons.create(data);
+
+    return {
+      success: true,
+      data: newPerson,
+      message: "Ok",
+      count: 1,
+    };
   }
 
   async find() {
     try {
       // const query = `SELECT * FROM public."Persons"`;
       // const [data] = await sequelize.query(query);
-      const data = await models.Persons.findAll();
+      const persons = await models.Persons.findAll();
 
-      if (data.length <= 0) throw boom.notFound("Persons not found");
+      if (persons.length <= 0) throw boom.notFound("Persons not found");
 
       return {
         success: true,
-        data,
+        data: persons,
         message: "Ok",
-        count: data.length,
+        count: persons.length,
       };
     } catch (error) {
       throw boom.badGateway(error.message);
@@ -34,15 +41,49 @@ class PersonsService {
   }
 
   async findOne(id) {
-    return id;
+    const person = await models.Persons.findOne({
+      where: {
+        Id: id,
+        Enabled: true,
+      },
+    });
+    if (!person) {
+      throw boom.notFound("Person not found");
+    }
+
+    return {
+      success: true,
+      data: person,
+      message: "Ok",
+      count: 1,
+    };
   }
 
   async update(id, changes) {
-    return changes;
+    const { data: person } = await this.findOne(id);
+    person.update(changes);
+
+    return {
+      success: true,
+      data: changes,
+      message: "Ok",
+      count: 1,
+    };
   }
 
   async delete(id) {
-    return { id };
+    const { data: person } = await this.findOne(id);
+    const changes = {
+      Enabled: false,
+    };
+
+    person.update(changes);
+    return {
+      success: true,
+      data: { id },
+      message: "Ok",
+      count: 1,
+    };
   }
 }
 
