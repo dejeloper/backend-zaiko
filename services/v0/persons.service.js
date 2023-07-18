@@ -1,6 +1,7 @@
 const boom = require("@hapi/boom");
 const pool = require("../../libs/postgres");
 const { models } = require("../../libs/sequelize");
+const { Op } = require("sequelize");
 
 class PersonsService {
   constructor() {
@@ -25,7 +26,13 @@ class PersonsService {
     try {
       // const query = `SELECT * FROM public."Persons"`;
       // const [data] = await sequelize.query(query);
-      const persons = await models.Persons.findAll();
+      const persons = await models.Persons.findAll({
+        where: {
+          State: {
+            [Op.ne]: 1000,
+          },
+        },
+      });
 
       if (persons.length <= 0) throw boom.notFound("Persons not found");
 
@@ -44,6 +51,9 @@ class PersonsService {
     const person = await models.Persons.findOne({
       where: {
         Id: id,
+        State: {
+          [Op.ne]: 1000,
+        },
         Enabled: true,
       },
     });
