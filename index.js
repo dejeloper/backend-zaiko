@@ -5,6 +5,7 @@ const {
   boomErrorHandler,
   errorHandler,
   logErrors,
+  ormErrorHandler,
 } = require("./middlewares/error.handler");
 
 const app = express();
@@ -17,6 +18,7 @@ const whitelist = [
   "http://127.0.0.1:5500",
   "https://backend-zaiko.vercel.app",
 ];
+
 const option = {
   origin: (origin, callback) => {
     if (whitelist.includes(origin) || !origin) {
@@ -36,6 +38,7 @@ app.get("/", (req, res) => {
 routerApi(app);
 
 app.use(logErrors);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
