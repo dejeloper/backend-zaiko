@@ -28,6 +28,7 @@ const PersonsSchema = {
   DocumentNumber: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    unique: true,
   },
   DateBirthday: {
     type: DataTypes.DATEONLY,
