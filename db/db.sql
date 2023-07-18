@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS public."Persons"
     "Name" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "LastName" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "DocumentType" integer NOT NULL,
-    "DocumentNumber" integer NOT NULL,
+    "DocumentNumber" integer NOT NULL UNIQUE,
     "DateBirthday" date NOT NULL,
     "State" integer NOT NULL,
     "Enabled" boolean NOT NULL DEFAULT true,
