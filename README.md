@@ -1,4 +1,6 @@
-# Zaiko Backend
+# Zaiko Backend Demo
+
+Api generada para probar conocimientos en node y ORM
 
 ### Herramienta hecha en Node, Express y Postgres(Adding)
 
@@ -32,4 +34,3 @@
 </pre>
 
 Desarrollado por @dejeloper
-Z41k0P4ss01\*
